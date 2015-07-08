@@ -3,8 +3,8 @@ ibw_jobeet_job:
     prefix:   /job
     
 ibw_jobeet_category:
-    pattern: /category/{slug}
-    defaults: {_controller: IbwJobeetBundle:Category:show}
+    pattern: /category/{slug}/{page}
+    defaults: {_controller: IbwJobeetBundle:Category:show, page:1}
 
 ibw_jobeet_homepage:
     path:     /

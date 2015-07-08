@@ -18,15 +18,32 @@
         <h1>{{ category.name }}</div>
     </div>
     
-    <table class="jobs">
-    {% for entity in category.activejobs %}
-        <tr class="{{ cycle(['even', 'odd'], loop.index) }}">
-            <td class="location">{{ entity.location }}</td>
-            <td class="position">
-                <a href="{{ path('ibw_job_show', {'id': entity.id, 'company': entity.companyslug, 'location': entity.locationslug, 'position': entity.positionslug}) }}">{{ entity.position }}</a>
-            </td>
-            <td class="company">{{ entity.company }}</td>
-        </tr>
-    {% endfor %}
-    </table>
+    {{ include('IbwJobeetBundle:Job:list.html.twig', {'jobs': category.activejobs}) }}
+    
+    {% if last_page > 1 %}
+    <div class="pagination">
+    	<a href="{{ path('ibw_jobeet_category', {'slug':category.slug, 'page':1}) }}"><img src="{{ asset('bundles/ibwjobeet/images/first.png') }}" title="First page"/></a>
+    	<a href="{{ path('ibw_jobeet_category', {'slug':category.slug, 'page':previous_page}) }}"><img src="{{ asset('bundles/ibwjobeet/images/previous.png') }}" title=""Previous page/></a>
+    	
+    	{% for page in 1..last_page %}
+    		{% if page == current_page %}
+    			{{ page }}
+    		{% else %}
+    			<a href="{{ path('ibw_jobeet_category', {'slug':category.slug, 'page':page}) }}">{{ page }}</a>
+    		{% endif %}
+    	{% endfor %}
+    	
+    	<a href="{{ path('ibw_jobeet_category', {'slug':category.slug, 'page':next_page}) }}"><img src="{{ asset('bundles/ibwjobeet/images/next.png') }}" title="Next page"/></a>
+    	<a href="{{ path('ibw_jobeet_category', {'slug':category.slug, 'page':last_page}) }}"><img src="{{ asset('bundles/ibwjobeet/images/last.png') }}" title="Last page"/></a>
+    </div>
+    {% endif %}
+    
+    <div class="pagination_desc">
+    	<strong>{{ total_jobs }}</strong> jobs in the cateogry
+    	{% if last_page > 1 %}
+    		- page <strong>{{ current_page }}/{{ last_page }}</strong>
+    	{% endif %}
+    </div>
+    
+    
 {% endblock %}
