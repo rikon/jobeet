@@ -557,4 +557,34 @@ class Job
     {
     	return null===$this->logo ? null : $this->getUploadRootDir() . '/' . $this->logo;
     }
+    
+    
+    
+    
+    /////ファイルアップロード系
+    public function preUpload()
+    {
+    	if(null !== $this->file) {
+    		$this->logo = uniqid() . '.' . $this->file->guessExtension();
+    	}
+    }
+    
+    public function upload()
+    {
+    	if(null === $this->file) {
+    		return;
+    	}
+    	
+    	$this->file->move($this->getUploadRootDir(), $this->logo);
+    	unset($this->file);
+    }
+    
+    public function removeUpload()
+    {
+    	$file = $this->getAbsolutePath();
+    	if(file_exists($file)) {
+    		unlink($file);
+    	}
+    }
+    
 }
