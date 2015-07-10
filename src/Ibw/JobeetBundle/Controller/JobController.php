@@ -182,7 +182,7 @@ class JobController extends Controller
     private function createEditForm(Job $entity)
     {
         $form = $this->createForm(new JobType(), $entity, array(
-            'action' => $this->generateUrl('ibw_job_update', array('token' => $entity->getToken())),
+            'action' => $this->generateUrl('ibw_job_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
