@@ -209,6 +209,7 @@ class JobController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+        	$em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('ibw_job_edit', array('token' => $token)));
