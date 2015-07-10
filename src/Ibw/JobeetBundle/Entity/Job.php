@@ -94,6 +94,9 @@ class Job
      * @var \Ibw\JobeetBundle\Entity\Category
      */
     private $category;
+    
+    
+    public $file;
 
 
     /**
@@ -479,7 +482,9 @@ class Job
     public function setCreatedAtValue()
     {
         // Add your code here
-        $this->created_at = new \DateTime();
+        if(!$this->getCreatedAt()) {
+        	$this->created_at = new \DateTime();
+        }
     }
 
     /**
@@ -517,5 +522,39 @@ class Job
         	$this->expires_at = new \DateTime(date('Y-m-d H:i:s', $now + 86400 * 30));
         }
     	
+    }
+    
+    
+    static function getTypes()
+    {
+    	return array('full-time'=>'Full time', 'part-time'=>'Part time', 'freelance'=>'Freelance');
+    }
+    
+    static function getTypeValues()
+    {
+    	return array_keys(self::getTypes());
+    }
+    
+    
+    
+    
+    protected function getUploadDir()
+    {
+    	return 'uploads/jobs';
+    }
+    
+    protected function getUploadRootDir()
+    {
+    	return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+    
+    protected function getWebPath()
+    {
+    	return null===$this->logo ? null : $this->getUploadDir() . '/' . $this->logo; 
+    }
+    
+    protected function getAbsolutePath()
+    {
+    	return null===$this->logo ? null : $this->getUploadRootDir() . '/' . $this->logo;
     }
 }

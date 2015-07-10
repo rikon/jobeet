@@ -71,10 +71,20 @@ class JobController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
+            $entity->file->move(__DIR__ . '/../../../../web/uploads/jobs', $entity->file->getClientOriginalName());
+            $entity->setLogo($entity->file->getClientOriginalName());
+            
+            
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ibw_job_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('ibw_job_show', array(
+            		'id' => $entity->getId(),
+            		'company' => $entity->getCompanySlug(),
+            		'location' => $entity->getLocationSlug(),
+            		'position' => $entity->getPositionSlug()
+            )));
         }
 
         return $this->render('IbwJobeetBundle:Job:new.html.twig', array(

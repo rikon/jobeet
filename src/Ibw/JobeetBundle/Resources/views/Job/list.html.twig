@@ -3,9 +3,9 @@
 	<tr class="{{ cycle(['even','odd'], loop.index) }}">
 		<td class="location">{{ entity.location }}></td>
 		<td class="position">
-			<a href="{{ path('ibw_job_show', {'id':entity.id, 'company':entity.company, 'location':entity.location, 'position':entity.position}) }}">{{ entity.position }}></a>
+			<a href="{{ path('ibw_job_show', {'id':entity.id, 'company':entity.companyslug, 'location':entity.locationslug, 'position':entity.positionslug}) }}">{{ entity.position }}</a>
 		</td>
-		<td class="company">{{ entity.company }}></td>
+		<td class="company">{{ entity.company }}</td>
 	</tr>
 {% endfor %}
 </table>
