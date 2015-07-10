@@ -589,4 +589,12 @@ class Job
     
     
     
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setTokenValue()
+    {
+        // Add your code here
+    }
 }

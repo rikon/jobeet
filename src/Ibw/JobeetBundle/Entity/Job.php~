@@ -94,6 +94,9 @@ class Job
      * @var \Ibw\JobeetBundle\Entity\Category
      */
     private $category;
+    
+    
+    public $file;
 
 
     /**
@@ -479,7 +482,9 @@ class Job
     public function setCreatedAtValue()
     {
         // Add your code here
-        $this->created_at = new \DateTime();
+        if(!$this->getCreatedAt()) {
+        	$this->created_at = new \DateTime();
+        }
     }
 
     /**
@@ -518,4 +523,70 @@ class Job
         }
     	
     }
+    
+    
+    static function getTypes()
+    {
+    	return array('full-time'=>'Full time', 'part-time'=>'Part time', 'freelance'=>'Freelance');
+    }
+    
+    static function getTypeValues()
+    {
+    	return array_keys(self::getTypes());
+    }
+    
+    
+    
+    
+    protected function getUploadDir()
+    {
+    	return 'uploads/jobs';
+    }
+    
+    protected function getUploadRootDir()
+    {
+    	return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+    
+    protected function getWebPath()
+    {
+    	return null===$this->logo ? null : $this->getUploadDir() . '/' . $this->logo; 
+    }
+    
+    protected function getAbsolutePath()
+    {
+    	return null===$this->logo ? null : $this->getUploadRootDir() . '/' . $this->logo;
+    }
+    
+    
+    
+    
+    /////ファイルアップロード系
+    public function preUpload()
+    {
+    	if(null !== $this->file) {
+    		$this->logo = uniqid() . '.' . $this->file->guessExtension();
+    	}
+    }
+    
+    public function upload()
+    {
+    	if(null === $this->file) {
+    		return;
+    	}
+    	
+    	$this->file->move($this->getUploadRootDir(), $this->logo);
+    	unset($this->file);
+    }
+    
+    public function removeUpload()
+    {
+    	$file = $this->getAbsolutePath();
+    	if(file_exists($file)) {
+    		unlink($file);
+    	}
+    }
+    
+    
+    
 }
