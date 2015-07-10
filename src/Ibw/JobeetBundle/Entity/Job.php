@@ -558,17 +558,20 @@ class Job
     	return null===$this->logo ? null : $this->getUploadRootDir() . '/' . $this->logo;
     }
     
-    
-    
-    
-    /////ファイルアップロード系
+
+    /**
+     * @ORM\PrePersist
+     */
     public function preUpload()
     {
-    	if(null !== $this->file) {
+        if(null !== $this->file) {
     		$this->logo = uniqid() . '.' . $this->file->guessExtension();
     	}
     }
-    
+
+    /**
+     * @ORM\PostPersist
+     */
     public function upload()
     {
     	if(null === $this->file) {
@@ -579,6 +582,9 @@ class Job
     	unset($this->file);
     }
     
+    /**
+     * @ORM\PostRemove
+     */
     public function removeUpload()
     {
     	$file = $this->getAbsolutePath();
@@ -588,13 +594,16 @@ class Job
     }
     
     
-    
-
     /**
      * @ORM\PrePersist
      */
     public function setTokenValue()
     {
-        // Add your code here
+    	if(!$this->getToken()) {
+    		$this->token = sha1($this->getEmail().rand(11111, 99999));
+    	}
     }
+    
+    
+    
 }

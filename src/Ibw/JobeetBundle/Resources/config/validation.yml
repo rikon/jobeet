@@ -16,8 +16,6 @@ Ibw\JobeetBundle\Entity\Job:
             - NotBlank: ~
         how_to_apply:
             - NotBlank: ~
-        token:
-            - NotBlank: ~
         email:
             - NotBlank: ~
             - Email: ~
