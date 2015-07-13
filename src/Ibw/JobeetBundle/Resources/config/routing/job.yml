@@ -31,8 +31,7 @@ ibw_job_preview:
     defaults: { _controller: "IbwJobeetBundle:Job:preview" }
     requirements:
         token: \w+
-    
-
+        
 ibw_job_delete:
     path:     /{token}/delete
     defaults: { _controller: "IbwJobeetBundle:Job:delete" }
