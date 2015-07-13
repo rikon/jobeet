@@ -605,5 +605,26 @@ class Job
     }
     
     
+    public function getDaysBeforeExpires()
+    {
+    	return ceil(($this->getExpiresAt()->format('U') - time()) / 86400);
+    }
+    
+    public function isExpired()
+    {
+    	return $this->getDaysBeforeExpires() < 0;
+    }
+    
+    public function expiresSoon()
+    {
+    	return $this->getDaysBeforeExpires() < 5;
+    }
+    
+    
+    
+    public function publish()
+    {
+    	$this->setIsActivated(true);
+    }
     
 }

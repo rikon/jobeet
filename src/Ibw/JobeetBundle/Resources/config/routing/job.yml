@@ -25,8 +25,21 @@ ibw_job_update:
     path:     /{token}/update
     defaults: { _controller: "IbwJobeetBundle:Job:update" }
     methods:  [POST, PUT]
+    
+ibw_job_preview:
+    pattern:  /{company}/{location}/{token}/{position}
+    defaults: { _controller: "IbwJobeetBundle:Job:preview" }
+    requirements:
+        token: \w+
+    
 
 ibw_job_delete:
     path:     /{token}/delete
     defaults: { _controller: "IbwJobeetBundle:Job:delete" }
     methods:  [POST, DELETE]
+
+
+ibw_job_publish:
+    path:     /{token}/publish
+    defaults: { _controller: "IbwJobeetBundle:Job:publish" }
+    requirements: { _method: post }
