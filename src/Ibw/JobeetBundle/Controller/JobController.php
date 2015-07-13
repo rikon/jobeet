@@ -195,7 +195,7 @@ class JobController extends Controller
     {
         $form = $this->createForm(new JobType(), $entity, array(
             'action' => $this->generateUrl('ibw_job_update', array('token' => $entity->getToken())),
-            'method' => 'POST',
+            'method' => 'PUT',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
