@@ -25,8 +25,9 @@ ibw_job_edit:
 ibw_job_update:
     path:     /{token}/update
     defaults: { _controller: "IbwJobeetBundle:Job:update" }
-    methods:  [POST, PUT]
-    
+    requirements:
+        _method:  POST|PUT
+        
 ibw_job_preview:
     pattern:  /{company}/{location}/{token}/{position}
     defaults: { _controller: "IbwJobeetBundle:Job:preview" }
