@@ -195,7 +195,8 @@ class JobController extends Controller
     {
         $form = $this->createForm(new JobType(), $entity, array(
             'action' => $this->generateUrl('ibw_job_update', array('token' => $entity->getToken())),
-            'method' => 'PUT',
+            //'method' => 'PUT',
+        	'method' => 'POST',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
@@ -221,7 +222,7 @@ class JobController extends Controller
         $editForm->handleRequest($request);
         
         if ($editForm->isValid()) {
-        	//$em->persist($entity);
+        	$em->persist($entity);
        		$em->flush();
        		return $this->redirect($this->generateUrl('ibw_job_preview', array(
        				'token' => $token,
