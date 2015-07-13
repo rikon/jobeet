@@ -35,7 +35,7 @@ ibw_job_preview:
 ibw_job_delete:
     path:     /{token}/delete
     defaults: { _controller: "IbwJobeetBundle:Job:delete" }
-    { _method: post|delete }
+    requirements: { _method: post|delete }
 
 
 ibw_job_publish:
