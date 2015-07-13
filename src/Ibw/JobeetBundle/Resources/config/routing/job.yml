@@ -15,7 +15,8 @@ ibw_job_new:
 ibw_job_create:
     path:     /create
     defaults: { _controller: "IbwJobeetBundle:Job:create" }
-    methods:  [POST]
+    requirements:
+        _method:  POST|GET
 
 ibw_job_edit:
     path:     /{token}/edit
