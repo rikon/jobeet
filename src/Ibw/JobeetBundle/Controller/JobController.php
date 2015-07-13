@@ -67,8 +67,9 @@ class JobController extends Controller
     {
         $entity = new Job();
         $form = $this->createCreateForm($entity);
-        //$form->handleRequest($request);
-        $form->bind($request);
+        $form->handleRequest($request);
+        //$form->bind($request);
+        
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
