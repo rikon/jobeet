@@ -155,6 +155,10 @@ class JobControllerTest extends WebTestCase
     			'job[is_public]'	=> false,
     	));
     	$client->submit($form);
-    	$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::createAction', $client->getRequest()->attributes->get('_controller'));
+    	$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::newAction', $client->getRequest()->attributes->get('_controller'));
+    	
+    	//$client->followRedirect();
+    	//$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::previewAction', $client->getRequest()->attributes->get('_controller'));
+    	
     }
 }
