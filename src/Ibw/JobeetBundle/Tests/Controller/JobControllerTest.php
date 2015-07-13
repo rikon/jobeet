@@ -143,7 +143,7 @@ class JobControllerTest extends WebTestCase
     	$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::newAction', $client->getRequest()->attributes->get('_controller'));
     	
     	//preview you job's test
-    	$form = $crawler->selectButton('Previewx your job')->form(array(
+    	$form = $crawler->selectButton('Preview your job')->form(array(
     			'job[company]'	=> '',
     			'job[url]'		=> 'http://www.sensio.com/',
     			'job[file]'		=> __DIR__.'/../../../../../web/bundles/ibwjobeet/images/sensio-labs.gif',
@@ -157,8 +157,9 @@ class JobControllerTest extends WebTestCase
     	$client->submit($form);
     	$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::createAction', $client->getRequest()->attributes->get('_controller'));
     	
-    	//$client->followRedirect();
-    	//$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::previewAction', $client->getRequest()->attributes->get('_controller'));
+    	
+    	$client->followRedirect();
+    	$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::previewAction', $client->getRequest()->attributes->get('_controller'));
     	
     }
 }
