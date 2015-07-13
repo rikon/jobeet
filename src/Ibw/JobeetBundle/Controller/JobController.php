@@ -269,8 +269,6 @@ class JobController extends Controller
     			'edit_form'   => $editForm->createView(),
     			'delete_form' => $deleteForm->createView(),
     	));
-    	}    	
-    	
     	
     }
     
