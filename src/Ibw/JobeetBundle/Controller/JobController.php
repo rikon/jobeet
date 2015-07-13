@@ -208,6 +208,7 @@ class JobController extends Controller
      */
     public function updateAction(Request $request, $token)
     {
+    	/*
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('IbwJobeetBundle:Job')->findOneByToken($token);
@@ -237,6 +238,40 @@ class JobController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+        */
+    	
+    	
+    	
+    	
+    	$em = $this->getDoctrine()->getManager();
+    	
+    	$entity = $em->getRepository('IbwJobeetBundle:Job')->findOneByToken($token);
+    	
+    	if (!$entity) {
+    		throw $this->createNotFoundException('Unable to find Job entity.');
+    	}
+    	
+    	$entity->setUpdatedAtValue();
+    	$editForm   = $this->createForm(new JobType(), $entity);
+    	$deleteForm = $this->createDeleteForm($token);
+    	
+    	$editForm->handleRequest($request);
+    	
+    	if ($editForm->isValid()) {
+    		$em->persist($entity);
+    		$em->flush();
+    	
+    		return $this->redirect($this->generateUrl('ibw_job_edit', array('token' => $token)));
+    	}
+    	
+    	return $this->render('IbwJobeetBundle:Job:edit.html.twig', array(
+    			'entity'      => $entity,
+    			'edit_form'   => $editForm->createView(),
+    			'delete_form' => $deleteForm->createView(),
+    	));
+    	}    	
+    	
+    	
     }
     
     public function previewAction($token)
