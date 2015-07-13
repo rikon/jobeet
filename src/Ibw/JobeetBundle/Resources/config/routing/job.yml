@@ -15,8 +15,7 @@ ibw_job_new:
 ibw_job_create:
     path:     /create
     defaults: { _controller: "IbwJobeetBundle:Job:create" }
-    requirements:
-        _method:  POST|GET
+    methods:  [POST, PUT]
 
 ibw_job_edit:
     path:     /{token}/edit
@@ -25,9 +24,8 @@ ibw_job_edit:
 ibw_job_update:
     path:     /{token}/update
     defaults: { _controller: "IbwJobeetBundle:Job:update" }
-    requirements:
-        _method:  POST|PUT
-        
+    methods:  [POST, PUT]
+    
 ibw_job_preview:
     pattern:  /{company}/{location}/{token}/{position}
     defaults: { _controller: "IbwJobeetBundle:Job:preview" }
