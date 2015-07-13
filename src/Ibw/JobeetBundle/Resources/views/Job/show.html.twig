@@ -11,6 +11,9 @@
 {% endblock %}
 
 {% block content %}
+	{% if app.request.get('token') %}
+	    {% include 'IbwJobeetBundle:Job:admin.html.twig' with {'job': entity} %}
+	{% endif %}
 	<div id="job">
 		<h1>{{ entity.company }}</h1>
 		<h2>{{ entity.location }}</h2>
