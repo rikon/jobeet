@@ -169,7 +169,7 @@ class JobControllerTest extends WebTestCase
     	$kernel->boot();
     	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
     	$query = $em->createQuery('SELECT count(j.id) FROM IbwJobeetBundle:Job j WHERE j.location=:location AND j.is_activated IS NULL AND j.is_public=0');
-    	$query->setParameter('location', 'Paris, France');
+    	$query->setParameter('location', 'Atlanta, USA');
     	$this->assertTrue(0 < $query->getSingleScalarResult());
     }
 }
