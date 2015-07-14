@@ -254,7 +254,7 @@ class JobController extends Controller
     	}
     	$deleteForm = $this->createDeleteForm($token);
     	$publishForm = $this->createPublishForm($token);
-    	$extendForm = $this->createExtendForm($entity->getToken());
+    	$extendForm = $this->createExtendForm($token);
     	
     	return $this->render('IbwJobeetBundle:Job:show.html.twig', array(
     		'entity' => $entity,
@@ -262,7 +262,6 @@ class JobController extends Controller
     		'publish_form' => $publishForm->createView(),
     		'extend_form' => $extendForm->createView(),
     	));
-    	
     }
     
     public function publishAction(Request $request, $token)
@@ -329,6 +328,7 @@ class JobController extends Controller
     		
     		$em = $this->getDoctrine()->getManager();
     		$entity = $em->getRepository('IbwJobeetBundle:Job')->findOneByToken($token);
+    		
 
     		if(!$entity) {
     			throw $this->createNotFoundException('Unable to find job entity.');
