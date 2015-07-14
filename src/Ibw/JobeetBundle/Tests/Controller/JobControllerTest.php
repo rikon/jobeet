@@ -234,7 +234,7 @@ class JobControllerTest extends WebTestCase
     
     public function testPublishJob() 
     {
-    	$client = $this->createJob(array('job[position]'=>'F001'));
+    	$client = $this->createJob(array('job[position]'=>'FOO1'));
     	$crawler = $client->getCrawler();
     	$form = $crawler->selectButton('Publish')->form();
     	$client->submit($form);
@@ -244,14 +244,14 @@ class JobControllerTest extends WebTestCase
     	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
     	
     	$query = $em->createQuery('SELECT count(j.id) FROM IbwJobeetBundle:Job j WHERE j.position=:position AND j.is_activated=1');
-    	$query->setParameter('position', 'F001');
+    	$query->setParameter('position', 'FOO1');
     	$this->assertTrue(0 < $query->getSingleScalarResult());
     }
     
     
     public function testDeleteJob()
     {
-    	$client = $this->createJob(array('job[position]'=>'F002'));
+    	$client = $this->createJob(array('job[position]'=>'FOO2'));
     	$crawler = $client->getCrawler();
     	$form = $crawler->selectButton('Delete')->form();
     	$client->submit($form);
@@ -261,7 +261,7 @@ class JobControllerTest extends WebTestCase
     	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
     	
     	$query = $em->createQuery('SELECT count(j.id) FROM IbwJobeetBundle:Job j WHERE j.position=:position');
-    	$query->setParameter('position', 'F002');
+    	$query->setParameter('position', 'FOO2');
     	$this->assertTrue(0 == $query->getSingleScalarResult());
     }
     
@@ -269,9 +269,9 @@ class JobControllerTest extends WebTestCase
     //ジョブが公開されている場合は、編集ページは 404 ステータスコードを返す必要があります。
     public function testEditJob()
     {
-    	$client = $this->createJob(array('job[position]'=>'F003'), true);
+    	$client = $this->createJob(array('job[position]'=>'FOO3'), true);
     	$crawler = $client->getCrawler();
-    	$crawler = $client->request('GET', sprintf('/job/%s/edit', $this->getJobByPosition('F003')->getToken()));
+    	$crawler = $client->request('GET', sprintf('/job/%s/edit', $this->getJobByPosition('FOO3')->getToken()));
     	$this->assertTrue(404 === $client->getResponse()->getStatusCode());
     }
     
@@ -279,16 +279,16 @@ class JobControllerTest extends WebTestCase
     public function testExtendJob()
     {
     	/*
-    	$client = $this->createJob(array('job[position]'=>'F004'), true);
+    	$client = $this->createJob(array('job[position]'=>'FOO4'), true);
     	$crawler = $client->getCrawler();
     	$this->assertTrue($crawler->filter('input[type=submit]:contains("Extend")')->count() == 0);
     	
     	//期限切れジョブを生成
-    	$client = $this->createJob(array('job[position]'=>'F005'), true);
+    	$client = $this->createJob(array('job[position]'=>'FOO5'), true);
     	$kernel = static::createKernel();
     	$kernel->boot();
     	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-    	$job = $em->getRepository('IbwJobeetBundle:Job')->findOneByPosition('F005');
+    	$job = $em->getRepository('IbwJobeetBundle:Job')->findOneByPosition('FOO5');
     	$job->setExpiresAt(new \DateTime());
     	$em->flush();
     	
@@ -299,7 +299,7 @@ class JobControllerTest extends WebTestCase
     	$client->submit($form);
     	
     	//Reload the job from db
-    	$job = $this->getJobByPosition('F005');
+    	$job = $this->getJobByPosition('FOO5');
     	
     	//check the expiration date
     	$this->assertTrue($job->getExpiresAt()->format('y/m/d') == date('y/m/d', time() + 86400 * 30));
