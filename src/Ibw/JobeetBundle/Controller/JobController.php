@@ -250,7 +250,7 @@ class JobController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$entity = $em->getRepository('IbwJobeetBundle:Job')->findOneByToken($token);
     	if(!$entity) {
-    		throw $this->createNotFoundException('Unable to find job entity.');
+    		throw $this->createNotFoundException('Unable to find job entity.xxxxxxxx');
     	}
     	$deleteForm = $this->createDeleteForm($token);
     	$publishForm = $this->createPublishForm($token);
