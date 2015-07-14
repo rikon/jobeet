@@ -291,7 +291,7 @@ class JobControllerTest extends WebTestCase
 	    $kernel->boot();
 	    $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 	    $job = $em->getRepository('IbwJobeetBundle:Job')->findOneByPosition('FOO5');
-	    $job->setExpiresAt(new \DateTime('+1 days'));
+	    $job->setExpiresAt(new \DateTime());
 	    $em->flush();
 	
 	    // Go to the preview page and extend the job
@@ -306,6 +306,10 @@ class JobControllerTest extends WebTestCase
 	
 	    // Check the expiration date
 	    $this->assertTrue($job->getExpiresAt()->format('y/m/d') == date('y/m/d', time() + 86400 * 30));
+	    
+	    echo $job->getExpiresAt()->format('y/m/d') . "\n";
+	    echo date('y/m/d', time() + 86400 * 30) . "\n";
+	     
     	
     }
     
