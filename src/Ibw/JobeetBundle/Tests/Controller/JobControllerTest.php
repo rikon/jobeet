@@ -227,4 +227,24 @@ class JobControllerTest extends WebTestCase
     	$query->setParameter('position', 'F001');
     	$this->assertTrue(0 < $query->getSingleScalarResult());
     }
+    
+    
+    public function testDeleteJob()
+    {
+    	$client = $this->createJob(array('job[position]'=>'F002'));
+    	$crawler = $client->getCrawler();
+    	$form = $crawler->selectButton('Delete')->form();
+    	$client->submit($form);
+    	
+    	$kernel = static::createKernel();
+    	$kernel->boot();
+    	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+    	
+    	$query = $em->createQuery('SELECT count(j.id) FROM IbwJobeetBundle:Job j WHERE j.position=:position');
+    	$query->setParameter('position', 'F002');
+    	$this->assertTrue(0 == $query->getSingleScalarResult());
+    }
+    
+    
+    
 }
