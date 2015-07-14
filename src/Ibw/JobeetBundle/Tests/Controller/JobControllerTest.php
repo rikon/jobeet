@@ -188,7 +188,7 @@ class JobControllerTest extends WebTestCase
     }
     
     
-    public function createJob($values = array())
+    public function createJob($values = array(), $publish = false)
     {
     	$client = self::createClient();
     	$crawler = $client->request('GET', '/job/new');
@@ -207,7 +207,27 @@ class JobControllerTest extends WebTestCase
     	$client->submit($form);
     	$client->followRedirect();
     	
+    	if($publish) {
+    		$crawler = $client->getCrawler();
+    		$form = $crawler->selectButton('Publish')->form();
+    		$client->submit($form);
+    		$client->followRedirect();
+    	}
+    	
     	return $client;
+    }
+    
+    
+    public function getJobByPosition($position)
+    {
+    	$kernel = static::createKernel();
+    	$kernel->boot();
+    	
+    	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+    	$query = $em->createQuery('SELECT j FROM IbwJobeetBunle:Job WHERE j.position=:position');
+    	$query->setParameter('position', $position);
+    	$query->setMaxResults(1);
+    	return $query->getSingleResult();
     }
     
     
@@ -245,6 +265,15 @@ class JobControllerTest extends WebTestCase
     	$this->assertTrue(0 == $query->getSingleScalarResult());
     }
     
+    
+    //ジョブが公開されている場合は、編集ページは 404 ステータスコードを返す必要があります。
+    public function testEditJob()
+    {
+    	$client = $this->createJob(array('job[position]'=>'F003'), true);
+    	$crawler = $client->getCrawler();
+    	$crawler = $client->request('GET', sprintf('/job/%s/edit', $this->getJobByPosition('F003')->getToken()));
+    	$this->assertTrue(404 === $client->getResponse()->getStatusCode());
+    }
     
     
 }
