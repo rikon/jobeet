@@ -633,7 +633,8 @@ class Job
     		return false;
     	}
     	
-    	$this->expires_at = new \DateTime('Y-m-d H:i:s', time() + 86400 * 30);
+    	//$this->expires_at = new \DateTime('Y-m-d H:i:s', time() + 86400 * 30);
+    	$this->expires_at = new \DateTime(date('Y-m-d H:i:s', time() + 86400 * 30));
     	return true;
     }
     
