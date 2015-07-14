@@ -296,7 +296,6 @@ class JobControllerTest extends WebTestCase
 	
 	    // Go to the preview page and extend the job
 	    $crawler = $client->request('GET', sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()));
-	    //echo sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()) . "\n";
 	    $crawler = $client->getCrawler();
 	    $form = $crawler->selectButton('Extend')->form();
 	    $client->submit($form);
@@ -305,10 +304,6 @@ class JobControllerTest extends WebTestCase
 	    $job = $this->getJobByPosition('FOO5');
 	
 	    // Check the expiration date
-	    
-	    echo $job->getExpiresAt()->format('y/m/d') . "\n";
-	    echo date('y/m/d', time() + 86400 * 30) . "\n";
-	    
 	    $this->assertTrue($job->getExpiresAt()->format('y/m/d') == date('y/m/d', time() + 86400 * 30));
     }
     
