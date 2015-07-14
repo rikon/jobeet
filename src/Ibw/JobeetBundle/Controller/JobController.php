@@ -344,6 +344,13 @@ class JobController extends Controller
     		$this->get('session')->getFlashBag()->add('notice', sprintf('Your job validity has been extended until %s', $entity->getExpiresAt()->format('m/d/Y')));
     	}
     	
+    	return $this->redirect($this->generateUrl('ibw_job_preview', array(
+    			'company' => $entity->getCompanySlug(),
+    			'location' => $entity->getLocationSlug(),
+    			'token' => $entity->getToken(),
+    			'position' => $entity->getPositionSlug()
+    	)));    	
+    	
     }
     
     public function createExtendForm($token)
