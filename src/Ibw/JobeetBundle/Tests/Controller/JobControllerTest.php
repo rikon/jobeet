@@ -170,6 +170,6 @@ class JobControllerTest extends WebTestCase
     	
     	$query = $em->createQuery('SELECT count(j.id) FROM IbwJobeetBundle:Job j WHERE j.location=:location AND j.is_activated IS NULL AND j.is_public=0');
     	$query->setParameter('location', 'Atalanta, USA');
-    	$this->assertTrue(0 < $this->getSingleScalarResult());
+    	$this->assertTrue(0 < $query->getSingleScalarResult());
     }
 }
