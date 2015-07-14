@@ -158,7 +158,8 @@ class JobControllerTest extends WebTestCase
     	$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::createAction', $client->getRequest()->attributes->get('_controller'));
     	
     	
-    	$client->followRedirect();
+    	//$client->followRedirect();
+    	$crawler = $client->followRedirect();
     	//$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::previewAction', $client->getRequest()->attributes->get('_controller'));
     	$this->assertTrue($client->getResponse()->isSuccessful());
     	
