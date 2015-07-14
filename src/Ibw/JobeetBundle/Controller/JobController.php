@@ -164,7 +164,7 @@ class JobController extends Controller
         
         //アクティブされたジョブは編集させない。
         if ($entity->getIsActivated()) {
-        	throw $this->createNotFoundException('Job is activated and cannot be edited.');
+        	//throw $this->createNotFoundException('Job is activated and cannot be edited.');
         }        
 
         $editForm = $this->createEditForm($entity);
