@@ -328,6 +328,7 @@ class JobControllerTest extends WebTestCase
     	
     	// Go to the preview page and extend the job
     	$crawler = $client->request('GET', sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()));
+    	echo sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()) . "\n";
     	$crawler = $client->getCrawler();
     	$form = $crawler->selectButton('Extend')->form();
     	$client->submit($form);
