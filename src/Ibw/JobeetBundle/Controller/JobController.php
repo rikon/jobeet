@@ -161,6 +161,11 @@ class JobController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
+        
+        //アクティブされたジョブは編集させない。
+        if ($entity->getIsActivated()) {
+        	throw $this->createNotFoundException('Job is activated and cannot be edited.');
+        }        
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($token);
