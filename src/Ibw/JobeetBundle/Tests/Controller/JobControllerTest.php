@@ -182,8 +182,8 @@ class JobControllerTest extends WebTestCase
     	$crawler = $client->submit($form);
     	
     	$this->assertTrue($crawler->filter('.error_list')->count() == 3);	//check if we have 3 errors
-    	$this->assertTrue($crawler->filter('#job_description')->siblings()->filter()->filter('.error_list')->count()==1);
-    	$this->assertTrue($crawler->filter('#job_how_to_apply')->siblings()->filter()->filter('.error_list')->count()==1);
-       	$this->assertTrue($crawler->filter('#job_email')->siblings()->filter()->filter('.error_list')->count()==1);
+    	$this->assertTrue($crawler->filter('#job_description')->siblings()->first()->filter('.error_list')->count()==1);
+    	$this->assertTrue($crawler->filter('#job_how_to_apply')->siblings()->first()->filter('.error_list')->count()==1);
+       	$this->assertTrue($crawler->filter('#job_email')->siblings()->first()->filter('.error_list')->count()==1);
     }
 }
