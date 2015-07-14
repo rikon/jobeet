@@ -188,35 +188,33 @@ class JobControllerTest extends WebTestCase
     }
     
     
-    public function createJob($values = array(), $publish = false)
-    {
-    	$client = self::createClient();
-    	$crawler = $client->request('GET', '/job/new');
-    	$form = $crawler->selectButton('Preview your job')->form(array_merge(array(
-    			'job[company]'	=> 'Sensio Labs',
-    			'job[url]'		=> 'http://www.sensio.com/',
-    			'job[file]'		=> __DIR__.'/../../../../../web/bundles/ibwjobeet/images/sensio-labs.gif',
-    			'job[position]'	=> 'Developer',
-    			'job[location]'	=> 'Atlanta, USA',
-    			'job[description]'	=> 'You will work with symfony to develop websites for our customers.',
-    			'job[how_to_apply]'	=> 'Send me an email',
-    			'job[email]'		=> 'for.a.job@example.com',
-    			'job[is_public]'	=> false,
-    	), $values));
-    	
-    	$client->submit($form);
-    	$client->followRedirect();
-    	
-    	if($publish) {
-    		$crawler = $client->getCrawler();
-    		$form = $crawler->selectButton('Publish')->form();
-    		$client->submit($form);
-    		$client->followRedirect();
-    	}
-    	
-    	return $client;
-    }
-    
+	public function createJob($values = array(), $publish = false)
+	{
+		$client = static::createClient();
+	    $crawler = $client->request('GET', '/job/new');
+	    $form = $crawler->selectButton('Preview your job')->form(array_merge(array(
+	        'job[company]'      => 'Sensio Labs',
+	        'job[url]'          => 'http://www.sensio.com/',
+	        'job[position]'     => 'Developer',
+	        'job[location]'     => 'Atlanta, USA',
+	        'job[description]'  => 'You will work with symfony to develop websites for our customers.',
+	        'job[how_to_apply]' => 'Send me an email',
+	        'job[email]'        => 'for.a.job@example.com',
+	        'job[is_public]'    => false,
+	    ), $values));
+	
+	    $client->submit($form);
+	    $client->followRedirect();
+	
+	    if($publish) {
+	    	$crawler = $client->getCrawler();
+	    	$form = $crawler->selectButton('Publish')->form();
+	    	$client->submit($form);
+	    	$client->followRedirect();
+	    }
+	    return $client;
+	}
+        
     
     public function getJobByPosition($position)
     {
@@ -278,67 +276,35 @@ class JobControllerTest extends WebTestCase
     
     public function testExtendJob()
     {
-    	/*
-    	$client = $this->createJob(array('job[position]'=>'FOO4'), true);
-    	$crawler = $client->getCrawler();
-    	$this->assertTrue($crawler->filter('input[type=submit]:contains("Extend")')->count() == 0);
-    	
-    	//期限切れジョブを生成
-    	$client = $this->createJob(array('job[position]'=>'FOO5'), true);
-    	$kernel = static::createKernel();
-    	$kernel->boot();
-    	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-    	$job = $em->getRepository('IbwJobeetBundle:Job')->findOneByPosition('FOO5');
-    	$job->setExpiresAt(new \DateTime());
-    	$em->flush();
-    	
-    	// Go to the preview page and extend the job
-    	$crawler  = $client->request('GET', sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()));
-    	$crawler = $client->getCrawler();
-    	$form = $crawler->selectButton('Extend')->form();
-    	$client->submit($form);
-    	
-    	//Reload the job from db
-    	$job = $this->getJobByPosition('FOO5');
-    	
-    	//check the expiration date
-    	$this->assertTrue($job->getExpiresAt()->format('y/m/d') == date('y/m/d', time() + 86400 * 30));
-    	*/
-    	
-    	
-    	// A job validity cannot be extended before the job expires soon
-    	$client = $this->createJob(array('job[position]' => 'FOO4'), true);
-    	$crawler = $client->getCrawler();
-    	$this->assertTrue($crawler->filter('input[type=submit]:contains("Extend")')->count() == 0);
-    	
-    	// A job validity can be extended when the job expires soon
-    	
-    	// Create a new FOO5 job
-    	$client = $this->createJob(array('job[position]' => 'FOO5'), true);
-    	
-    	// Get the job and change the expire date to today
-    	$kernel = static::createKernel();
-    	$kernel->boot();
-    	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-    	$job = $em->getRepository('IbwJobeetBundle:Job')->findOneByPosition('FOO5');
-    	$job->setExpiresAt(new \DateTime());
-    	//$job->setExpiresAt(new \DateTime('-4 days'));
-    	$em->flush();
-    	
-    	
-    	// Go to the preview page and extend the job
-    	$crawler = $client->request('GET', sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()));
-    	echo sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()) . "\n";
-    	$crawler = $client->getCrawler();
-    	$form = $crawler->selectButton('Extend')->form();
-    	$client->submit($form);
-    	
-    	// Reload the job from db
-    	$job = $this->getJobByPosition('FOO5');
-    	
-    	// Check the expiration date
-    	$this->assertTrue($job->getExpiresAt()->format('y/m/d') == date('y/m/d', time() + 86400 * 30));
-    	 
+	    // A job validity cannot be extended before the job expires soon
+	    $client = $this->createJob(array('job[position]' => 'FOO4'), true);
+	    $crawler = $client->getCrawler();
+	    $this->assertTrue($crawler->filter('input[type=submit]:contains("Extend")')->count() == 0);
+	
+	    // A job validity can be extended when the job expires soon
+	
+	    // Create a new FOO5 job
+	    $client = $this->createJob(array('job[position]' => 'FOO5'), true);
+	
+	    // Get the job and change the expire date to today
+	    $kernel = static::createKernel();
+	    $kernel->boot();
+	    $em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+	    $job = $em->getRepository('IbwJobeetBundle:Job')->findOneByPosition('FOO5');
+	    $job->setExpiresAt(new \DateTime());
+	    $em->flush();
+	
+	    // Go to the preview page and extend the job
+	    $crawler = $client->request('GET', sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()));
+	    $crawler = $client->getCrawler();
+	    $form = $crawler->selectButton('Extend')->form();
+	    $client->submit($form);
+	
+	    // Reload the job from db
+	    $job = $this->getJobByPosition('FOO5');
+	
+	    // Check the expiration date
+	    $this->assertTrue($job->getExpiresAt()->format('y/m/d') == date('y/m/d', time() + 86400 * 30));
     	
     }
     
