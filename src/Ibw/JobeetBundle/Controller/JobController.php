@@ -254,6 +254,7 @@ class JobController extends Controller
     	}
     	$deleteForm = $this->createDeleteForm($token);
     	$publishForm = $this->createPublishForm($token);
+    	$extendForm = $this->createExtendForm($entity->getToken());
     	
     	return $this->render('IbwJobeetBundle:Job:show.html.twig', array(
     		'entity' => $entity,
