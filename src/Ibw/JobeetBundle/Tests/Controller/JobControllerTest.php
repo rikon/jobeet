@@ -224,7 +224,7 @@ class JobControllerTest extends WebTestCase
     	$kernel->boot();
     	
     	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-    	$query = $em->createQuery('SELECT j FROM IbwJobeetBunle:Job WHERE j.position=:position');
+    	$query = $em->createQuery('SELECT j FROM IbwJobeetBundle:Job WHERE j.position=:position');
     	$query->setParameter('position', $position);
     	$query->setMaxResults(1);
     	return $query->getSingleResult();
