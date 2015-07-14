@@ -258,7 +258,8 @@ class JobController extends Controller
     	return $this->render('IbwJobeetBundle:Job:show.html.twig', array(
     		'entity' => $entity,
     		'delete_form' => $deleteForm->createView(),
-    		'publish_form' => $publishForm->createView()	
+    		'publish_form' => $publishForm->createView(),
+    		'extend_form' => $extendForm->createView(),
     	));
     	
     }
