@@ -144,7 +144,6 @@ class JobControllerTest extends WebTestCase
     	
     	//preview you job's test
     	$form = $crawler->selectButton('Preview your job')->form(array(
-    			'job[type]'		=> 'part-time',
     			'job[company]'	=> 'Sensio Labs',
     			'job[url]'		=> 'http://www.sensio.com/',
     			'job[file]'		=> __DIR__.'/../../../../../web/bundles/ibwjobeet/images/sensio-labs.gif',
@@ -171,5 +170,19 @@ class JobControllerTest extends WebTestCase
     	$query = $em->createQuery('SELECT count(j.id) FROM IbwJobeetBundle:Job j WHERE j.location=:location AND j.is_activated IS NULL AND j.is_public=0');
     	$query->setParameter('location', 'Atlanta, USA');
     	$this->assertTrue(0 < $query->getSingleScalarResult());
+    	
+    	//エラーのテスト
+    	$crawler = $client->request('GET', '/job/new');
+    	$form = $crawler->selectButton('Preview your job')->form(array(
+    			'job[company]'	=> 'Sensio Labs',
+    			'job[position]'	=> 'Developer',
+    			'job[location]'	=> 'Atlanta, USA',
+    			'job[email]'		=> 'not.an.email',
+    	));
+    	$crawler = $client->submit($form);
+    	
+    	$this->assertTrue($crawler->filter('.error_list')->count() == 3);	//check if we have 3 errors
+    	$this->assertTrue($crawler->filter('#job_description')->siblings()->filter()->filter('.error_list')->count()==3);
+    	
     }
 }
