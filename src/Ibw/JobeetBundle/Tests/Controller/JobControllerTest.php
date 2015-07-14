@@ -234,7 +234,7 @@ class JobControllerTest extends WebTestCase
     
     public function testPublishJob() 
     {
-    	$client = $this->createJob(array('job[position]'=>'FOO1'));
+    	$client = $this->createJob(array('job[position]'=>'FOO1'), true);
     	$crawler = $client->getCrawler();
     	$form = $crawler->selectButton('Publish')->form();
     	$client->submit($form);
@@ -251,7 +251,7 @@ class JobControllerTest extends WebTestCase
     
     public function testDeleteJob()
     {
-    	$client = $this->createJob(array('job[position]'=>'FOO2'));
+    	$client = $this->createJob(array('job[position]'=>'FOO2'), true);
     	$crawler = $client->getCrawler();
     	$form = $crawler->selectButton('Delete')->form();
     	$client->submit($form);
