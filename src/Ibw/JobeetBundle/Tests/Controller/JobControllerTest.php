@@ -186,4 +186,45 @@ class JobControllerTest extends WebTestCase
     	$this->assertTrue($crawler->filter('#job_how_to_apply')->siblings()->first()->filter('.error_list')->count()==1);
        	$this->assertTrue($crawler->filter('#job_email')->siblings()->first()->filter('.error_list')->count()==1);
     }
+    
+    
+    public function createJob($values = array())
+    {
+    	$client = self::createClient();
+    	$crawler = $client->request('GET', '/job/new');
+    	$form = $crawler->selectButton('Preview your job')->form(array_merge(array(
+    			'job[company]'	=> 'Sensio Labs',
+    			'job[url]'		=> 'http://www.sensio.com/',
+    			'job[file]'		=> __DIR__.'/../../../../../web/bundles/ibwjobeet/images/sensio-labs.gif',
+    			'job[position]'	=> 'Developer',
+    			'job[location]'	=> 'Atlanta, USA',
+    			'job[description]'	=> 'You will work with symfony to develop websites for our customers.',
+    			'job[how_to_apply]'	=> 'Send me an email',
+    			'job[email]'		=> 'for.a.job@example.com',
+    			'job[is_public]'	=> false,
+    	), $values));
+    	
+    	$client->submit($form);
+    	$client->followRedirect();
+    	
+    	return $client;
+    }
+    
+    
+    
+    public function testPublishJob() 
+    {
+    	$client = $this->createJob(array('job[position]'=>'F001'));
+    	$crawler = $client->getCrawler();
+    	$form = $crawler->selectButton('Publish')->form();
+    	$client->submit($form);
+    	
+    	$kernel = static::createKernel();
+    	$kernel->boot();
+    	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+    	
+    	$query = $em->createQuery('SELECT count(j.id) FROM IbwJobeetBundle:Job j WHERE j.position=:position AND j.is_activated=1');
+    	$query->setParameter('position', 'F001');
+    	$this->assertTrue(0 < $query->getSingleScalarResult());
+    }
 }
