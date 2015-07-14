@@ -302,7 +302,7 @@ class JobController extends Controller
     public function deleteAction(Request $request, $token)
     {
     	$form = $this->createDeleteForm($token);
-    	$form->bind($request);
+    	$form->handleRequest($request);
     	
     	if ($form->isValid()) {
     		$em = $this->getDoctrine()->getManager();
@@ -317,9 +317,39 @@ class JobController extends Controller
     	}
     	
     	return $this->redirect($this->generateUrl('ibw_job'));
-    	 
+    }
+    
+    
+    public function extendAction(Request $request, $token) {
+    	$form = $this->createExtendForm($token);
+    	
+    	if($form->isValid()) {
+    		
+    		$em = $this->getDoctrine()->getManager();
+    		$entity = $em->getRepository('IbwJobeetBundle:Job')->findOneByToken($token);
+
+    		if(!$entity) {
+    			throw $this->createNotFoundException('Unable to find job entity.');
+    		}
+    		
+    		if(!$entity->extend()) {
+    			throw $this->createNotFoundException('Unable to extend Job.');
+    		}
+    		
+    		$em->persist($entity);
+    		$em->flush();
+    		
+    		$this->get('session')->getFlashBag()->add('notice', sprintf('Your job validity has been extended until %s', $entity->getExpiresAt()->format('m/d/Y')));
+    	}
     	
     }
+    
+    public function createExtendForm($token)
+    {
+    	return $this->createFormBuilder(array('token'=>$token))->add('token', 'hidden')->getForm();
+    }
+    
+    
 
     /**
      * Creates a form to delete a Job entity by id.

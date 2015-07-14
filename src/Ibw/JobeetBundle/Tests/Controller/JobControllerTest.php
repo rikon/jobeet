@@ -276,4 +276,36 @@ class JobControllerTest extends WebTestCase
     }
     
     
+    public function testExtendJob()
+    {
+    	
+    	$client = $this->createJob(array('job[position]'=>'F004'), true);
+    	$crawler = $client->getCrawler();
+    	$this->assertTrue($crawler->filter('input[type=submit]:contains("Extend")')->count() == 0);
+    	
+    	//期限切れジョブを生成
+    	$client = $this->createJob(array('job[position]'=>'F005'), true);
+    	$kernel = static::createKernel();
+    	$kernel->boot();
+    	$em = $kernel->getContainer()->get('doctrine.orm.entity_manager');
+    	$job = $em->getRepository('IbwJobeetBundle:Job')->findOneByPosition('F005');
+    	$job->setExpiresAt(new \DateTime());
+    	$em->flush();
+    	
+    	/*
+    	// Go to the preview page and extend the job
+    	$crawler  = $client->request('GET', sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()));
+    	$crawler = $client->getCrawler();
+    	$form = $crawler->selectButton('Extend')->form();
+    	$client->submit($form);
+    	
+    	//Reload the job from db
+    	$job = $this->getJobByPosition('F005');
+    	
+    	//check the expiration date
+    	$this->assertTrue($job->getExpiresAt()->format('y/m/d') == date('y/m/d', time() + 86400 * 30));
+    	*/
+    }
+    
+    
 }
