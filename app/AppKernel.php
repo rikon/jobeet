@@ -19,7 +19,12 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Ibw\JobeetBundle\IbwJobeetBundle(),
         	new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-        	//new Sonata\CoreBundle\SonataCoreBundle(),
+        	new Sonata\CoreBundle\SonataCoreBundle(),
+        		
+        	new Sonata\AdminBundle\SonataAdminBundle(),
+        	new Sonata\BlockBundle\SonataBlockBundle(),
+        	new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+        	new Knp\Bundle\MenuBundle\KnpMenuBundle(),        		
         );
         
         //var_dump($this->getEnvironment());exit;
