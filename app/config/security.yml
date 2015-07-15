@@ -22,10 +22,10 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
 
-	providers:
-		main:
-			entity: { class: Ibw\JobeetBundle\Entity\User, property: username }
-			
-	encoders:
-		Ibw\JobeetBundle\Entity\User: sha512			
+    providers:
+        main:
+            entity: { class: Ibw\JobeetBundle\Entity\User, property: username }
+            
+    encoders:
+        Ibw\JobeetBundle\Entity\User: sha512			
 
