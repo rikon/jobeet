@@ -31,5 +31,29 @@ class JobAdminController extends Controller
 
         return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
     }
+    
+    
+    public function batchActionDeleteNeverActivatedIsRelevant()
+    {
+    	return true;
+    }    
+    
+    public function batchActionDeleteNeverActivated()
+    {
+    	if ($this->admin->isGranted('EDIT') === false || $this->admin->isGranted('DELETE') === false) {
+    		throw new AccessDeniedException();
+    	}
+    
+    	$em = $this->getDoctrine()->getManager();
+    	$nb = $em->getRepository('IbwJobeetBundle:Job')->cleanup(60);
+    
+    	if ($nb) {
+    		$this->get('session')->getFlashBag()->add('sonata_flash_success',  sprintf('%d never activated jobs have been deleted successfully.', $nb));
+    	} else {
+    		$this->get('session')->getFlashBag()->add('sonata_flash_info',  'No job to delete.');
+    	}
+    
+    	return new RedirectResponse($this->admin->generateUrl('list',$this->admin->getFilterParameters()));
+    }    
 
 }
