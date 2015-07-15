@@ -130,6 +130,23 @@ class JobController extends Controller {
 			throw $this->createNotFoundException ( 'Unable to find Job entity.' );
 		}
 		
+		//save history to sesesion
+		$session = $this->getRequest()->getSession();
+		$jobs = $session->get('job_history', array());
+		$job = array(
+				'id'=>$entity->getId(), 
+				'position'=>$entity->getPosition(), 
+				'company'=>$entity->getCompany(), 
+				'companyslug'=>$entity->getCompanySlug(), 
+				'locationslug'=>$entity->getLocationSlug(),
+				'positionslug'=>$entity->getPositionSlug()
+		);
+		if(!in_array($job, $jobs)) {
+			array_unshift($jobs, $job);
+			$session->set('job_history', array_slice($jobs, 0, 3));
+		}
+		/////
+		
 		$deleteForm = $this->createDeleteForm ( $id );
 		
 		return $this->render ( 'IbwJobeetBundle:Job:show.html.twig', array (
