@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Jobeet ({{ category.name }})</title>
     <subtitle>Latest Jobs</subtitle>
-    <link href="{{ url('IbwJobeetBundle_category', { 'slug': category.slug, '_format': 'atom' }) }}" rel="self" />
+    <link href="{{ url('ibw_jobeet_category', { 'slug': category.slug, '_format': 'atom' }) }}" rel="self" />
     <updated>{{ lastUpdated }}</updated>
     <author><name>Jobeet</name></author>
     <id>{{ feedId }}</id>
