@@ -39,9 +39,5 @@ class JobeetUsersCommand extends ContainerAwareCommand
 		
 		$output->writeln(sprintf('Added %s user with password %s', $username, $password));
 
-)
-		
-		//$user->setPassword($password);
-		
 	}
 }
