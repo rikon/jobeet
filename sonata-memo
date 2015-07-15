@@ -1,3 +1,7 @@
 composer require sonata-project/core-bundle:~2.2
+composer require sonata-project/doctrine-orm-admin-bundle
+composer require sonata-project/admin-bundle
+
+
 composer require sonata-project/admin-bundle
 composer require sonata-project/doctrine-orm-admin-bundle
