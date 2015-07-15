@@ -103,6 +103,11 @@ class JobAdmin extends Admin
     				'label'            => 'Extend',
     				'ask_confirmation' => true // If true, a confirmation will be asked before performing the action
     		);
+    		
+    		$actions['deleteNeverActivated'] = array(
+    			'label' => 'Delete never activated jobs',
+    			'ask_confirmation' => true
+    		);
     
     	}
     
