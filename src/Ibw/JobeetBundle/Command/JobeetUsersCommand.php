@@ -35,7 +35,7 @@ class JobeetUsersCommand extends ContainerAwareCommand
 		$encodePassword = $encoder->encodePassword($password, $user->getSalt());
 		$user->setPassword($encodePassword);
 		$em->persist($user);
-		$em->flush(9);
+		$em->flush();
 		
 		$output->writeln(sprintf('Added %s user with password %s', $username, $password));
 
