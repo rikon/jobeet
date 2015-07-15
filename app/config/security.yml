@@ -25,6 +25,7 @@ security:
 	providers:
 		main:
 			entity: { class: Ibw\JobeetBundle\Entity\User, property: username }
+			
+	encoders:
+		Ibw\JobeetBundle\Entity\User: sha512			
 
-    encoders:
-        Symfony\Component\Security\Core\User\User: plaintext         
