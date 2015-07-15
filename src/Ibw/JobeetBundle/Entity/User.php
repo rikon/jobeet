@@ -3,11 +3,12 @@
 namespace Ibw\JobeetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var string
@@ -120,5 +121,27 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }
+    
+    
+    
+    /////////////////////////////////
+    public function getRoles()
+    {
+    	return array('ROLE_ADMIN');
+    }
+    
+    public function getSalt()
+    {
+    	return null;
+    }
+    
+    public function eraseCredentials()
+    {
+    	
+    }
+    
+    public function equals(User $user) {
+    	return $user->getUsername() == $this->getUsername();
     }
 }
