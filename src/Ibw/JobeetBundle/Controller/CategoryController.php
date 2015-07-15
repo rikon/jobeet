@@ -38,7 +38,9 @@ class CategoryController extends Controller
 		
 		
 		$format = $this->getRequest()->getRequestFormat();
+		
 		return $this->render('IbwJobeetBundle:Category:show.' . $format . '.twig', array(		
+		
 			'category'	=> $category,
 			'last_page'	=> $last_page,
 			'previous_page'	=> $previous_page,
