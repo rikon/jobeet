@@ -56,12 +56,14 @@ class AffiliateController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		
 		if ($form->isValid()) {
-		
+			
+			/*
 			$formData = $request->get('affiliate');
 			$affiliate->setUrl($formData['url']);
 			$affiliate->setEmail($formData['email']);
 			$affiliate->setIsActive(false);
-		
+			*/
+			
 			$em->persist($affiliate);
 			$em->flush();
 		
