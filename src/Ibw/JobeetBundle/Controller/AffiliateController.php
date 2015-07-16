@@ -29,13 +29,6 @@ class AffiliateController extends Controller
 		$form = $this->createForm(new AffiliateType(), $affiliate);
 		$form->handleRequest($request);
 		$em = $this->getDoctrine()->getManager();
-		*/
-		
-		$affiliate = new Affiliate();
-		$form = $this->createForm(new AffiliateType(), $affiliate);
-		$form->bind($request);
-		$em = $this->getDoctrine()->getManager();
-		
 		
 		
 		if($form->isValid()) {
@@ -55,8 +48,8 @@ class AffiliateController extends Controller
 				'entity' => $affiliate,
 				'form' => $form->createView()
 		));
+		*/
 		
-		/*
 		$affiliate = new Affiliate();
 		$form = $this->createForm(new AffiliateType(), $affiliate);
 		$form->bind($request);
@@ -79,7 +72,6 @@ class AffiliateController extends Controller
 				'entity' => $affiliate,
 				'form'   => $form->createView(),
 		));
-		*/
 		
 		
 	}
