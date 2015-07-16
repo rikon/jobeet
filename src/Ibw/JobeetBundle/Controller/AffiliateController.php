@@ -24,7 +24,6 @@ class AffiliateController extends Controller
 	
 	public function createAction(Request $request)
 	{
-		/*
 		$affiliate = new Affiliate();
 		$form = $this->createForm(new AffiliateType(), $affiliate);
 		$form->handleRequest($request);
@@ -47,8 +46,8 @@ class AffiliateController extends Controller
 				'entity' => $affiliate,
 				'form' => $form->createView()
 		));
-		*/
 		
+		/*
 		$affiliate = new Affiliate();
 		$form = $this->createForm(new AffiliateType(), $affiliate);
 		$form->bind($request);
@@ -71,7 +70,7 @@ class AffiliateController extends Controller
 				'entity' => $affiliate,
 				'form'   => $form->createView(),
 		));
-		
+		*/
 		
 		
 	}
