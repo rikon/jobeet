@@ -76,5 +76,30 @@ class ApiControllerTest extends WebTestCase
 		$crawler = $client->request('GET', '/api/sensio-labs/jobs.xml');
 		$this->assertEquals('Ibw\JobeetBundle\Controller\ApiController::listAction', $client->getRequest()->attributes->get('_controller'));
 		$this->assertTrue($crawler->filter('description')->count() == 32);
+		
+		
+		//for xml
+		$crawler = $client->request('GET', '/api/sensio-labs87/jobs.xml');
+		$this->assertTrue(404 == $client->getResponse()->getStatusCode());
+		
+		$crawler = $client->request('GET', '/api/symfony/jobs.xml');
+		$this->assertTrue(404 == $client->getResponse()->getStatusCode());
+		
+		//for json
+		$crawler = $client->request('GET', '/api/sensio-labs/jobs.json');
+		$this->assertEquals('Ibw\JobeetBundle\Controller\ApiController::listAction', $client->getRequest()->attributes->get('_controller'));
+		$this->assertRegExp('/"category"\:"Programming"/', $client->getResponse()->getContent());
+		
+		$crawler = $client->request('GET', '/api/sensio-labs87/jobs.json');
+		$this->assertTrue(404 == $client->getResponse()->getStatusCode());
+				
+		//for yaml
+		$crawler = $client->request('GET', '/api/sensio-labs/jobs.yaml');
+		$this->assertEquals('Ibw\JobeetBundle\Controller\ApiController::listAction', $client->getRequest()->attributes->get('_controller'));
+		$this->assertRegExp('/category\: Programming/', $client->getResponse()->getContent());
+		
+		$crawler = $client->request('GET', '/api/sensio-labs87/jobs.yaml');
+		$this->assertTrue(404 == $client->getResponse()->getStatusCode());
+		
 	}
 }
