@@ -4,6 +4,7 @@ namespace Ibw\JobeetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Ibw\JobeetBundle\Entity\Affiliate;
+use Ibw\JobeetBundle\Form\AffiliateType;
 
 
 class AffiliateController extends Controller
