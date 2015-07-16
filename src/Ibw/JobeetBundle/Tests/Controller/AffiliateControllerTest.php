@@ -96,6 +96,7 @@ class AffiliateControllerTest extends WebTestCase
 		
 		$crawler = $client->request('GET', '/affiliate/new');
 		$form = $crawler->selectButton('Submit')->form(array(
+			'affiliate[url]' => 'http://sensio-labs.com/',
 			'affiliate[email]' => 'not.an.email'
 		));
 		$crawler = $client->submit($form);
