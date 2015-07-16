@@ -104,5 +104,28 @@ class AffiliateControllerTest extends WebTestCase
 		$this->assertTrue($crawler->filter('#affiliate_email')->siblings()->first()->filter('.error_list')->count() == 1);
 	}
 	
+	public function testCreate()
+	{
+		$client = static::createClient();
+		$crawler = $client->request('GET', '/affiliate/new');
+		$form = $crawler->selectButton('Submit')->form(array(
+			'affiliate[url]' => 'http://sensio-labs.com/',
+			'affiliate[email]' => 'address@example.com',
+		));
+		$client->submit($form);
+		$client->followRedirect();
+		
+		$this->assertEquals('Ibw\JobeetBundle\Controller\AffiliateController::waitAction', $client->getRequest()->attributes->get('_controller'));
+		
+		return $client;
+	}
+	
+	public function testWait()
+	{
+		$client = static::createClient();
+		$crawler = $client->request('GET', '/affiliate/wait');
+		$this->assertEquals('Ibw\JobeetBundle\Controller\AffiliateController::waitAction', $client->getRequest()->attributes->get('_controller'));
+	}
+	
 	
 }
