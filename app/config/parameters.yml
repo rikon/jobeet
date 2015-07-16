@@ -7,6 +7,6 @@ parameters:
     database_password: null
     mailer_transport: gmail
     mailer_host: ~
-    mailer_user: r.ikon@bf7.so-net.ne.jp
-    mailer_password: 01170118
+    mailer_user: ca23255@gmail.com
+    mailer_password: zJKxXaa4
     secret: ThisTokenIsNotSoSecretChangeIt
