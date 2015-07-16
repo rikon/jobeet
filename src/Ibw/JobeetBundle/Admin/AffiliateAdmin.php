@@ -9,12 +9,11 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class AffiliateAdmin extends Admin
 {
-	protected $datagridValues = array(
-		'_sort_order' => 'ASC',
-		'_sort_by' => 'is_active',
-		'is_active' => array('value' => null) // The value 2 represents that the displayed affiliate accounts are not activated yet
-	);
-	
+    protected $datagridValues = array(
+        '_sort_order' => 'ASC',
+        '_sort_by' => 'is_active',
+        'is_active' => array('value' => 2) // The value 2 represents that the displayed affiliate accounts are not activated yet
+    );	
 	
 	protected function configureFormFields(FormMapper $formMapper) {
 		$formMapper
