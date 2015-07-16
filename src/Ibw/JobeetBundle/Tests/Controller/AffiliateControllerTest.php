@@ -81,7 +81,7 @@ class AffiliateControllerTest extends WebTestCase
 			'affiliate[email]' => 'jobeet@example.com',
 		));
 		$client->submit($form);
-		$this->asserEquals('Ibw\JobeetBundle\Controller\AffiliateController::createAction', $client->getRequest()->attributes->get('_controller'));
+		$this->assertEquals('Ibw\JobeetBundle\Controller\AffiliateController::createAction', $client->getRequest()->attributes->get('_controller'));
 		
 		
 		
