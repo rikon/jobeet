@@ -24,3 +24,14 @@ Ibw\JobeetBundle\Entity\Job:
         file:
             - Image: ~
         
+
+Ibw\JobeetBundle\Entity\Affiliate:
+    constraints
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+    properties:
+        url:
+            - Url: ~
+        email:
+            - NotBlank: ~
+            - Email: ~
+            

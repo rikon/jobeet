@@ -1,0 +1,60 @@
+{% extends 'IbwJobeetBundle::layout.html.twig' %}
+
+{% form_theme form _self %}
+
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+        <ul class="error_list">
+        {% for error in errors %}
+            <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assert('bundles/ibwjobeet/css/job.css') }}" type="text/css" media="all" />
+{% endblock stylesheets %}
+
+
+{% block content%}
+<h1>Become an affiliate</h1>
+<form action="{{ path('ibw_affiliate_create') }}" method="post" {{ form_encrpt(form) }}>
+<table id="job_form">
+    <tfoot>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Submit" />
+            </td>
+        </tr>
+    </tfoot>
+    <tbody>
+        <tr>
+            <th>{{ form_label(form.url) }}</th>
+            <td>
+                {{ form_erros(form.url) }}
+                {{ form_widget(form.url) }}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.email) }}</th>
+            <td>
+                {{ form_erros(form.email) }}
+                {{ form_widget(form.email) }}
+            </td>
+        </tr>
+         <tr>
+            <th>{{ form_label(form.categories) }}</th>
+            <td>
+                {{ form_erros(form.categories) }}
+                {{ form_widget(form.categories) }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{{ form_end(form) }}
+{% endblock content %}
