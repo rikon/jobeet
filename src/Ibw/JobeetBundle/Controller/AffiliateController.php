@@ -54,7 +54,7 @@ class AffiliateController extends Controller
 	
 	public function waitAction()
 	{
-		return $this->render('IbwJobeetBundle:Affiliate:wati.html.twig');	
+		return $this->render('IbwJobeetBundle:Affiliate:wait.html.twig');	
 	}
 	
 }
