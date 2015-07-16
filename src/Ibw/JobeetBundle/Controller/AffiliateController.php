@@ -24,10 +24,19 @@ class AffiliateController extends Controller
 	
 	public function createAction(Request $request)
 	{
+		/*
 		$affiliate = new Affiliate();
 		$form = $this->createForm(new AffiliateType(), $affiliate);
 		$form->handleRequest($request);
 		$em = $this->getDoctrine()->getManager();
+		*/
+		
+		$affiliate = new Affiliate();
+		$form = $this->createForm(new AffiliateType(), $affiliate);
+		$form->bind($request);
+		$em = $this->getDoctrine()->getManager();
+		
+		
 		
 		if($form->isValid()) {
 			
