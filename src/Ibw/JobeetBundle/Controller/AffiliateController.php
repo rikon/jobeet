@@ -52,7 +52,7 @@ class AffiliateController extends Controller
 		
 		$affiliate = new Affiliate();
 		$form = $this->createForm(new AffiliateType(), $affiliate);
-		$form->bind($request);
+		$form->handleRequest($request);
 		$em = $this->getDoctrine()->getManager();
 		
 		if ($form->isValid()) {
