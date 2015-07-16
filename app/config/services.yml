@@ -27,7 +27,7 @@ services:
             - 'IbwJobeetBundle:JobAdmin'
     
     ibw.jobeet.admin.affiliate:
-        class: Ibw\JobeetBundle\Entity\AffiliateAdmin
+        class: Ibw\JobeetBundle\Admin\AffiliateAdmin
         tags:
             - { name:sonota.admin, manager_type:orm, group:jobeet, label:Affiliates }
         arguments:
