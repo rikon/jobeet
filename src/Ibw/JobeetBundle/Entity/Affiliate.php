@@ -227,6 +227,6 @@ class Affiliate
     		$token = sha1($this->getEmail().rand(11111, 99999));
     		$this->token = $token;
     	}
-    	//return $this;
+    	return $this;
     }
 }
