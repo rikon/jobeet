@@ -102,6 +102,7 @@ class AffiliateControllerTest extends WebTestCase
 		$crawler = $client->submit($form);
 		
 		//check if we have 1 errors
+		var_dump($crawler->filter('.error_list')->count());
 		$this->assertTrue($crawler->filter('.error_list')->count() == 1);
 		//check if we have error onaffliate_email field.
 		$this->assertTrue($crawler->filter('#affiliate_email')->siblings()->first()->filter('.error_list')->count() == 1);
