@@ -24,6 +24,7 @@ class AffiliateController extends Controller
 	
 	public function createAction(Request $request)
 	{
+		/*
 		$affiliate = new Affiliate();
 		$form = $this->createForm(new AffiliateType(), $affiliate);
 		$form->handleRequest($request);
@@ -31,12 +32,10 @@ class AffiliateController extends Controller
 		
 		if($form->isValid()) {
 			
-			/*
 			$formData = $request->get('affiliate');
 			$affiliate->setUrl($formData['url']);
 			$affiliate->setEmail($formData['email']);
 			$affiliate->setIsActive(false);
-			*/
 			
 			$em->persist($affiliate);
 			$em->flush();
@@ -48,6 +47,32 @@ class AffiliateController extends Controller
 				'entity' => $affiliate,
 				'form' => $form->createView()
 		));
+		*/
+		
+		$affiliate = new Affiliate();
+		$form = $this->createForm(new AffiliateType(), $affiliate);
+		$form->bind($request);
+		$em = $this->getDoctrine()->getManager();
+		
+		if ($form->isValid()) {
+		
+			$formData = $request->get('affiliate');
+			$affiliate->setUrl($formData['url']);
+			$affiliate->setEmail($formData['email']);
+			$affiliate->setIsActive(false);
+		
+			$em->persist($affiliate);
+			$em->flush();
+		
+			return $this->redirect($this->generateUrl('ibw_affiliate_wait'));
+		}
+		
+		return $this->render('IbwJobeetBundle:Affiliate:affiliate_new.html.twig', array(
+				'entity' => $affiliate,
+				'form'   => $form->createView(),
+		));
+		
+		
 		
 	}
 	
