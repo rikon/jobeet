@@ -29,4 +29,11 @@ class DefaultController extends Controller
     			'error' => $error,
     	));
     }
+    
+    
+    public function changeLanguageAction()
+    {
+    	$language = $this->getRequest()->get('language');
+    	return $this->redirect($this->generateUrl('ibw_jobeet_homepage', array('_locale'=>$language)));
+    }
 }

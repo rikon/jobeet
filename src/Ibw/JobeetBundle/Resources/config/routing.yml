@@ -40,4 +40,7 @@ ibw_jobeet_api:
     requirements:
         _format: xml|json|yaml
 
+ibw_jobeet_changelang:
+    pattern:   /change_language
+    defaults:  { _controller: "IbwJobeetBundle:Default:changeLanguage" }
 

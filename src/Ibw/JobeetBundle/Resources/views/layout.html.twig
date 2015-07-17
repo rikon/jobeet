@@ -97,6 +97,16 @@
 						<li><a href="">Jobeet API</a></li>
 						<li class="last"><a href="{{ path('ibw_affiliate_new') }}">Become an affiliate</a></li>
 					</ul>
+					
+                    <form action="{{ path('ibw_jobeet_changelang') }}" method="get">
+                        <label>Language</label>
+                            <select name="language">
+                                <option value="en" {% if app.request.get('_locale') == 'en' %}selected="selected"{% endif %}>English</option>
+                                <option value="fr" {% if app.request.get('_locale') == 'fr' %}selected="selected"{% endif %}>French</option>
+                            </select>
+                        <input type="submit" value="Ok">
+                    </form>
+					
 				</div>
 			</div>
 		</div>
