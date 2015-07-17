@@ -670,4 +670,48 @@ class Job
     	return __DIR__ . '/../../../../web/data/job.index';
     }
     
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function updateLuceneIndex()
+    {
+    	
+    	$index = self::getLuceneIndex();
+    	
+    	//remove existing entries
+    	foreach($index->find('pk:'.$this->getId()) as $hit) {
+    		$index->delete($hit->id);
+    	}
+    	
+    	if($this->isExpired() || !$this->getIsActivated()) {
+    		return;
+    	}
+    	
+    	$doc = new \Zend_Search_Lucene_Document();
+    	$doc->addField(\Zend_Search_Lucene_Field::keyword('pk', $this->getId()));
+    	
+    	//index job fields
+    	$doc->addField(\Zend_Search_Lucene_Field::unStored('position', $this->getPosition(), 'utf-8'));
+    	$doc->addField(\Zend_Search_Lucene_Field::unStored('company', $this->getCompany(), 'utf-8'));
+    	$doc->addField(\Zend_Search_Lucene_Field::unStored('location', $this->getLocation(), 'utf-8'));
+    	$doc->addField(\Zend_Search_Lucene_Field::unStored('description', $this->getDescription(), 'utf-8'));
+    	
+    	$index->addDocument($doc);
+    	$index->commit();
+    	
+    	
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function deleteLuceneIndex()
+    {
+    	$index = self::getLuceneIndex();
+    	
+    	foreach($index->find('pk:' . $this->getId()) as $hit) {
+    		$index->delete($hit->id);
+    	}
+    }
 }
