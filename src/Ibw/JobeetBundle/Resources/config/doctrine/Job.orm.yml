@@ -62,7 +62,7 @@ Ibw\JobeetBundle\Entity\Job:
     lifecycleCallbacks:
         prePersist: [ preUpload, setCreatedAtValue, setExpiresAtValue, setTokenValue ]
         preUpdate: [ preUpload, setUpdatedAtValue ]
-        postPersist: [upload]
-        postUpdate: [upload]
+        postPersist: [upload, updateLuceneIndex ]
+        postUpdate: [upload, updateLuceneIndex ]
         postRemove: [removeUpload]
         

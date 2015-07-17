@@ -655,4 +655,19 @@ class Job
     }
     
     
+    
+    static public function getLuceneIndex()
+    {
+    	if(file_exists($index = self::getLuceneIndexFile())) {
+    		return \Zend_Search_Lucene::open($index);
+    	}
+    	
+    	return \Zend_Search_Lucene::create($index);
+    }
+    
+    static public function getLuceneIndexFile()
+    {
+    	return __DIR__ . '/../../../../web/data/job.index';
+    }
+    
 }
