@@ -81,7 +81,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     auth_mode:  login
-    encryption: ssl
+    #encryption: ssl
     port:  587
     logging:  "%kernel.debug%"
     
