@@ -29,7 +29,7 @@ class AffiliateAdminController extends Controller
 				//send email
 				$message = \Swift_Message::newInstance()
 				->setSubject('Jobeet affiliate token')
-				->setFrom('address@example.com')
+				->setFrom('ri_kon@comsq.com')
 				->setTo($selectedModel->getEmail())
 				->setBody(
 						$this->renderView('IbwJobeetBundle:Affiliate:email.txt.twig', array('affiliate' => $selectedModel->getToken())))
@@ -99,7 +99,7 @@ class AffiliateAdminController extends Controller
 			
 			$message = \Swift_Message::newInstance()
 						->setSubject('Jobeet affiliate token')
-						->setFrom('address@example.com')
+						->setFrom('ri_kon@comsq.com')
 						->setTo($affiliate->getEmail())
 						->setBody($this->render('IbwJobeetBundle:Affiliate:email.txt.twig', array('affiliate'=>$affiliate->getToken())))
 			;
