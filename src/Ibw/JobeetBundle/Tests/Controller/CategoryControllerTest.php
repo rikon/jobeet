@@ -82,7 +82,7 @@ class CategoryControllerTest extends WebTestCase
 
         // categories on homepage are clickable
         foreach($categories as $category) {
-            $crawler = $client->request('GET', '/');
+            $crawler = $client->request('GET', '/en/');
 
             $link = $crawler->selectLink($category->getName())->link();
             $crawler = $client->click($link);
@@ -94,7 +94,7 @@ class CategoryControllerTest extends WebTestCase
 
             // categories with more than $max_jobs_on_homepage jobs also have a "more" link
             if($jobs_no > $max_jobs_on_homepage) {
-                $crawler = $client->request('GET', '/');
+                $crawler = $client->request('GET', '/en/');
                 $link = $crawler->filter(".category_" . $category->getSlug() . " .more_jobs a")->link();
                 $crawler = $client->click($link);
 

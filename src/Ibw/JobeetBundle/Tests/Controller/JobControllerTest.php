@@ -103,9 +103,15 @@ class JobControllerTest extends WebTestCase
 
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/fr/');
         $this->assertEquals('Ibw\JobeetBundle\Controller\JobController::indexAction', $client->getRequest()->attributes->get('_controller'));
-
+        
+        $crawler = $client->request('GET', '/it/');
+        $this->assertEquals('Ibw\JobeetBundle\Controller\JobController::indexAction', $client->getRequest()->attributes->get('_controller'));
+        
+        $crawler = $client->request('GET', '/en/');
+        $this->assertEquals('Ibw\JobeetBundle\Controller\JobController::indexAction', $client->getRequest()->attributes->get('_controller'));
+        
         // expired jobs are not listed
         $this->assertTrue($crawler->filter('.jobs td.position:contains("Expired")')->count() == 0);
 
@@ -114,6 +120,7 @@ class JobControllerTest extends WebTestCase
         $this->assertTrue($crawler->filter('.category_design .more_jobs')->count() == 0);
         $this->assertTrue($crawler->filter('.category_programming .more_jobs')->count() == 1);
 
+        
         // jobs are sorted by date
         $this->assertTrue($crawler->filter('.category_programming tr')->first()->filter(sprintf('a[href*="/%d/"]', $this->getMostRecentProgrammingJob()->getId()))->count() == 1);
 
@@ -128,18 +135,18 @@ class JobControllerTest extends WebTestCase
         $this->assertEquals($job->getId(), $client->getRequest()->attributes->get('id'));
 
         // a non-existent job forwards the user to a 404
-        $crawler = $client->request('GET', '/job/foo-inc/milano-italy/0/painter');
+        $crawler = $client->request('GET', '/en/job/foo-inc/milano-italy/0/painter');
         $this->assertTrue(404 === $client->getResponse()->getStatusCode());
 
         // an expired job page forwards the user to a 404
-        $crawler = $client->request('GET', sprintf('/job/sensio-labs/paris-france/%d/web-developer', $this->getExpiredJob()->getId()));
+        $crawler = $client->request('GET', sprintf('/en/job/sensio-labs/paris-france/%d/web-developer', $this->getExpiredJob()->getId()));
         $this->assertTrue(404 === $client->getResponse()->getStatusCode());
     }
     
     public function testJobForm()
     {
     	$client = static::createClient();
-    	$crawler = $client->request('GET', '/job/new');
+    	$crawler = $client->request('GET', '/en/job/new');
     	$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::newAction', $client->getRequest()->attributes->get('_controller'));
     	
     	//preview you job's test
@@ -172,7 +179,7 @@ class JobControllerTest extends WebTestCase
     	$this->assertTrue(0 < $query->getSingleScalarResult());
     	
     	//エラーのテスト
-    	$crawler = $client->request('GET', '/job/new');
+    	$crawler = $client->request('GET', '/en/job/new');
     	$form = $crawler->selectButton('Preview your job')->form(array(
     			'job[company]'	=> 'Sensio Labs',
     			'job[position]'	=> 'Developer',
@@ -191,7 +198,7 @@ class JobControllerTest extends WebTestCase
 	public function createJob($values = array(), $publish = false)
 	{
 		$client = static::createClient();
-	    $crawler = $client->request('GET', '/job/new');
+	    $crawler = $client->request('GET', '/en/job/new');
 	    $form = $crawler->selectButton('Preview your job')->form(array_merge(array(
 	        'job[company]'      => 'Sensio Labs',
 	        'job[url]'          => 'http://www.sensio.com/',
@@ -269,7 +276,7 @@ class JobControllerTest extends WebTestCase
     {
     	$client = $this->createJob(array('job[position]'=>'FOO3'), true);
     	$crawler = $client->getCrawler();
-    	$crawler = $client->request('GET', sprintf('/job/%s/edit', $this->getJobByPosition('FOO3')->getToken()));
+    	$crawler = $client->request('GET', sprintf('/en/job/%s/edit', $this->getJobByPosition('FOO3')->getToken()));
     	$this->assertTrue(404 === $client->getResponse()->getStatusCode());
     }
     
@@ -295,7 +302,7 @@ class JobControllerTest extends WebTestCase
 	    $em->flush();
 	
 	    // Go to the preview page and extend the job
-	    $crawler = $client->request('GET', sprintf('/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()));
+	    $crawler = $client->request('GET', sprintf('/en/job/%s/%s/%s/%s', $job->getCompanySlug(), $job->getLocationSlug(), $job->getToken(), $job->getPositionSlug()));
 	    $crawler = $client->getCrawler();
 	    $form = $crawler->selectButton('Extend')->form();
 	    $client->submit($form);
@@ -312,10 +319,10 @@ class JobControllerTest extends WebTestCase
     public function testSearch()
     {
     	$client = static::createClient();
-    	$crawler = $client->request('GET', '/job/search');
+    	$crawler = $client->request('GET', '/en/job/search');
     	$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::searchAction', $client->getRequest()->attributes->get('_controller'));
     	
-    	$crawler = $client->request('GET', '/job/search?query=sens*', array(), array(), array(
+    	$crawler = $client->request('GET', '/en/job/search?query=sens*', array(), array(), array(
     			'X-Requested-With' => 'XMLHttpRequest',
     	));
     	$this->assertTrue($crawler->filter('tr')->count()== 2);
