@@ -22,8 +22,7 @@
 			
 			{% if category.morejobs %}
 				<div class="more_jobs">
-				    and <a href="{{ path('ibw_jobeet_category', {'slug': category.slug}) }}">{{ category.morejobs }}</a>
-				    more...
+				    {% trans with {'%count%': '<a href="' ~ path('ibw_jobeet_category', { 'slug': category.slug }) ~ '">' ~  category.morejobs ~ '</a>'} %}and %count% more...{% endtrans %}
 				</div>
 			{% endif%}
 		</div>
