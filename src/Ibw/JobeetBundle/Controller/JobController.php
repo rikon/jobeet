@@ -35,6 +35,11 @@ class JobController extends Controller {
         ));
 		*/
     	
+		$request = $this->getRequest();
+		if($request->get('_route') == 'ibw_jobeet_nonlocalized') {
+			return $this->redirect($this->generateUrl('ibw_jobeet_homepage'));
+		}
+		
     	
     	$max_per_category = $this->container->getParameter ( 'max_jobs_on_homepage' );
 		$em = $this->getDoctrine ()->getManager ();
