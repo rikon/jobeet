@@ -39,6 +39,7 @@
 							<form action="{{ path('ibw_job_search') }}" method="get">
 								<input type="text" name="query" id="search_keywords" value="{{ app.request.get('query') }}" />
 								<input type="submit" value="search" />
+								<img id="loader" src="{{ asset('bundles/ibwjobeet/images/loader.gif') }}" style="vertical-align: middle; display: none" />
 								<div class="help">
 									Enter some keywords (city, country, position, ...)
 								</div>
