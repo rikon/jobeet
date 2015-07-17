@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Ibw\JobeetBundle\Entity\Job;
 use Ibw\JobeetBundle\Form\JobType;
 use Ibw\JobeetBundle\IbwJobeetBundle;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Job controller.
@@ -362,12 +363,26 @@ class JobController extends Controller {
 		$query = $this->getRequest()->get('query');
 		
 		if(!$query) {
-			return $this->redirect($this->generateUrl('ibw_job'));
+			if(!$request->isXmlHttpRequest()) {
+				return $this->redirect($this->generateUrl('ibw_job'));
+			} else {
+				return new Response('No results.');
+			}
+			
+			
 		}
 		
 		$jobs = $em->getRepository('IbwJobeetBundle:Job')->getForLuceneQuery($query);
 		
+		if($request->isXmlHttpRequest()) {
+			if('*' == $query || !$jobs || $query == '') {
+				return new Response('No results.');
+			}
+			return $this->render('IbwJobeetBundle:Job:list.html.twig', array('jobs'=>$jobs));
+		}
 		return $this->render('IbwJobeetBundle:Job:search.html.twig', array('jobs'=>$jobs));
+		
+		
 	}
 	
 	
