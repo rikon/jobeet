@@ -322,6 +322,7 @@ class JobController extends Controller {
 		
 		return $this->redirect ( $this->generateUrl ( 'ibw_job' ) );
 	}
+	
 	public function extendAction(Request $request, $token) {
 		$form = $this->createExtendForm ( $token );
 		$form->handleRequest ( $request );
@@ -352,6 +353,24 @@ class JobController extends Controller {
 				'position' => $entity->getPositionSlug () 
 		) ) );
 	}
+	
+	
+	
+	public function searchAction(Request $request)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$query = $this->getRequest()->get('query');
+		
+		if(!$query) {
+			return $this->redirect($this->generateUrl('ibw_job'));
+		}
+		
+		$jobs = $em->getRepository('IbwJobeetBundle:Job')->getForLuceneQuery($query);
+		
+		return $this->render('IbwJobeetBundle:Job:search.html.twig', array('jobs'=>$jobs));
+	}
+	
+	
 	public function createExtendForm($token) {
 		return $this->createFormBuilder ( array (
 				'token' => $token 
