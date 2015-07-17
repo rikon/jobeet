@@ -106,8 +106,8 @@ class JobControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/fr/');
         $this->assertEquals('Ibw\JobeetBundle\Controller\JobController::indexAction', $client->getRequest()->attributes->get('_controller'));
         
-        $crawler = $client->request('GET', '/it/');
-        $this->assertEquals('Ibw\JobeetBundle\Controller\JobController::indexAction', $client->getRequest()->attributes->get('_controller'));
+        //$crawler = $client->request('GET', '/it/');
+        //$this->assertEquals('Ibw\JobeetBundle\Controller\JobController::indexAction', $client->getRequest()->attributes->get('_controller'));
         
         $crawler = $client->request('GET', '/en/');
         $this->assertEquals('Ibw\JobeetBundle\Controller\JobController::indexAction', $client->getRequest()->attributes->get('_controller'));
